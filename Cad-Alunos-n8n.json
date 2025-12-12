@@ -1,0 +1,360 @@
+{
+  "name": "Cad-Alunos-n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Cadastro de Alunos n8n",
+        "formDescription": "Form de cadastro de alunos n8n",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome",
+              "placeholder": "insira seu nome completo",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "e-mail",
+              "fieldType": "email",
+              "placeholder": "endereco@dominio",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Data de nascimento",
+              "fieldType": "date",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Endereço",
+              "placeholder": "informe seu endereço",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Número",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Complemento"
+            },
+            {
+              "fieldLabel": "CEP",
+              "placeholder": "99999-000",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Cidade",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Estado",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Nível de conhecimento do n8n",
+              "fieldType": "radio",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Iniciante"
+                  },
+                  {
+                    "option": "Intermediário"
+                  },
+                  {
+                    "option": "Avançado"
+                  },
+                  {
+                    "option": "Expert"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Enviar"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -496,
+        0
+      ],
+      "id": "8dcd67d7-a1fe-4117-bc36-6259af18ac01",
+      "name": "On form submission",
+      "webhookId": "7fa1d013-68e2-4db2-840f-d6410ebb2a80"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Insere dados formulário').item.json.Email }}",
+        "subject": "Envio de material do curso n8n",
+        "emailType": "text",
+        "message": "Olá aluno(a)! Segue o material da aula Integração com o Google",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        0
+      ],
+      "id": "a89d808d-4e80-4595-a71c-92e5c021907e",
+      "name": "Envio e-mail",
+      "webhookId": "2563a246-36f9-4953-8167-d49ac5494328",
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lva3mpqbOgwTmBWl",
+          "name": "Gmail account 2"
+        }
+      },
+      "notes": "Não foi possível enviar o e-mail com o material.\n\nPedimos desculpas e estamos providenciando o envio o mais rápido possível."
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "17gBZQDHHCNgzHq1LI3PRibp8uDrk65Wj",
+          "mode": "list",
+          "cachedResultName": "01_Modulos.ipynb",
+          "cachedResultUrl": "https://colab.research.google.com/drive/17gBZQDHHCNgzHq1LI3PRibp8uDrk65Wj"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "18b21947-ab5b-4c85-839e-bf50ba4dc91b",
+      "name": "Cópia de arquivo",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "x4qw1LDKkNHdw71O",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1YA70Ig6BoDUosFV0wRZeThHaB4NVvKbcWWmom5eCGEU",
+          "mode": "list",
+          "cachedResultName": "Teste_Envio_Email_n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YA70Ig6BoDUosFV0wRZeThHaB4NVvKbcWWmom5eCGEU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Dados",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YA70Ig6BoDUosFV0wRZeThHaB4NVvKbcWWmom5eCGEU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json['e-mail'] }}",
+            "DataCadastro": "={{ $json.submittedAt }}",
+            "NomeSobrenome": "={{ $json.Nome }}",
+            "DataNascimento": "={{ $json['Data de nascimento'] }}",
+            "Endereco": "={{ $json['Endereço'] }}",
+            "Numero": "={{ $json['Número'] }}",
+            "Complemento": "={{ $json.Complemento }}",
+            "Cidade": "={{ $json.Cidade }}",
+            "CEP": "={{ $json.CEP }}",
+            "Estado": "={{ $json.Estado }}",
+            "Nivel_n8n": "={{ $json['Nível de conhecimento do n8n'] }}",
+            "Envio_Email": "={{ $json.submittedAt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DataCadastro",
+              "displayName": "DataCadastro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NomeSobrenome",
+              "displayName": "NomeSobrenome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DataNascimento",
+              "displayName": "DataNascimento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Endereco",
+              "displayName": "Endereco",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Numero",
+              "displayName": "Numero",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Complemento",
+              "displayName": "Complemento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CEP",
+              "displayName": "CEP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cidade",
+              "displayName": "Cidade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nivel_n8n",
+              "displayName": "Nivel_n8n",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Envio_Email",
+              "displayName": "Envio_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "795a7bf0-469a-4bd0-af49-170a20811499",
+      "name": "Insere dados formulário",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VuoCDPZAp7aXvHsc",
+          "name": "Google Sheets account 5"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Insere dados formulário",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cópia de arquivo": {
+      "main": [
+        [
+          {
+            "node": "Envio e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insere dados formulário": {
+      "main": [
+        [
+          {
+            "node": "Cópia de arquivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cdd423a9-70e7-4872-8c90-8d4d14bee239",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "46c2d83be72f17f0f83c2fc275fcd4f6e458b7d38983ffce9dc478866899af25"
+  },
+  "id": "z3uOoBzyqmHNrDti",
+  "tags": []
+}

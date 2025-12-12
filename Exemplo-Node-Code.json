@@ -1,0 +1,57 @@
+{
+  "name": "Exemplo-Node-Code",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "captura-data",
+        "options": {}
+      },
+      "id": "7c546a89-045f-46c7-83d8-8b1c53c68ab5",
+      "name": "Entrada Usuário",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "35943fb2-58e2-4a57-9e08-2b6825d39e3d"
+    },
+    {
+      "parameters": {
+        "functionCode": "const entrada = $json.body.texto || '';\nconst hoje = new Date();\nconst ontem = new Date();\nontem.setDate(hoje.getDate() - 1);\n\nlet dataReferencia = hoje.toISOString().split('T')[0];\n\nif (entrada.toLowerCase().includes('ontem')) {\n  dataReferencia = ontem.toISOString().split('T')[0];\n}\n\nreturn [{ json: {\n  dataAtual: hoje.toISOString().split('T')[0],\n  dataOntem: ontem.toISOString().split('T')[0],\n  dataReferencia\n}}];"
+      },
+      "id": "79aa4732-fb21-4c73-9497-98dad0f9e368",
+      "name": "Processa Datas",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        256,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Entrada Usuário": {
+      "main": [
+        [
+          {
+            "node": "Processa Datas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "024a5529-1546-48e3-b7d8-43bb404d811e",
+  "meta": {
+    "instanceId": "46c2d83be72f17f0f83c2fc275fcd4f6e458b7d38983ffce9dc478866899af25"
+  },
+  "id": "k97DjgWVaWGbrZHd",
+  "tags": []
+}

@@ -1,0 +1,5 @@
+Coluna,Tipo,Descrição,Exemplo de Valor
+Name (ou ID da Mensagem),Title,A chave única que o n8n usará para buscar a mensagem.,ALERTA_ESTOQUE_BAIXO
+Mensagem_PT,Text,O conteúdo da mensagem em Português.,Atenção! O produto {nome} está com apenas {quantidade} unidades em estoque.
+Tipo,Select,"Para categorizar (Sucesso, Erro, Alerta). Útil para filtros.",ALERTA
+Ativo,Checkbox,Para desativar mensagens temporariamente.,TRUE

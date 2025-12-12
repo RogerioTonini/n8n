@@ -1,0 +1,373 @@
+{
+  "name": "Cad-Despesas-Mensais",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Início\n\n[ Trigger, Horário, Mensagem Formulário, etc.... ]\n\n- Mensagens: Telegram, Whatsapp.\n\n- Usuário via Telegram, Whatsapp, etc\n\n- Sistema via evento programado. Ex.: 5 hrs da manhã.\n\n- Contexto: Nome, Local, Tempo disponível",
+        "height": 688,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1040,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "b6cceb11-1139-4e21-861b-8c078fd5285d",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## AGENTE\n\nAgente de LLM",
+        "height": 384,
+        "width": 880
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -704,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "effb1a6a-6d93-4866-b06c-d617e438254d",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## LLM\nAgente de LLM",
+        "height": 288,
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -704,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "f1e78afc-f3fe-4a75-a3fe-e28e18586e83",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## APIs",
+        "height": 288,
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -256,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "c17c3669-c1cc-44f3-b9e6-3e1baf68aade",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Memória\n- Nome do usuário\n- Últimas interações",
+        "height": 288,
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "10b1b945-4646-4895-bb11-32cff1b37c39",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Ferramentas",
+        "height": 288,
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "90e93cbe-d421-46d9-adbe-2d79eae38074",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## SAÍDA\n\n- Mensagens: Telegram, Whatsapp.\n\n- Usuário via Telegram, Whatsapp, etc\n\n- Sistema via evento programado. Ex.: 5 hrs da manhã.\n\n- Contexto: Nome, Local, Tempo disponível",
+        "height": 688,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        192,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "1b35f1a2-c507-416a-948d-159c5b0cd641",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "[Role]\n1. Você responderá sempre em Português do Brasil\n2. Você é um assistente de finanças pessoais. Seu único objetivo é registrar despesas informadas pelo usuário.\n[Task]\n1. Receba a mensagem do usuário contendo um gasto.\n2. Identifique e extraia:\n   - Data do gasto (DD/MM/AAAA)\n   - Descrição do item\n   - Valor\n   - Moeda (BRL)\n   - Nome do fornecedor\n   - Tipo de despesa (pessoal ou empresarial). \n3. Se a moeda for BTC (Bitcoin), use a ferramenta de conversão antes de registrar o valor em BRL.\n4. Use a ferramenta de planilha para registrar os dados. Será um registro para cada intereção com o usuário.\n[Tools]\n1. Conversor de BTC: Retorna o valor atual de 1 BTC em BRL.\n2. Planilha: Campos necessários — Data, Item, Valor (em BRL), Fornecedor, Tipo de Despesa.\n[Constraints]\n1. Não responda nada fora do escopo de controle de despesas.\n2. Se for questionado sobre outro assunto, diga: “Sou um assistente de controle financeiro e só posso registrar despesas.”\n3. Nunca forneça respostas aleatórias.\n4. Use o valor da variável dataAtual como referência se o usuário não especificar uma data.\n4.1. Caso o usuário mencione a palavra ontem, use a seguinte expressão matemática para calcular a data de compra: variável dataAtual - 1.\n4.2. Caso o usuário mencione a frase \"antes de ontem\", use a seguinte expressão matemática para calcular a data de compra: variável dataAtual - 2.\nEm qualquer um destes 3 casos a data deverá ser formatada no padrão: dd/MM/yyyy.\n5. O caractere separador de inteiros e decimais é a vírgula e também deve ser utilizado para o Valor convertido.\n6. Caso a compra / gasto tenha sido feito em meda diferente de BRL, registrar apenas a compra com o Valor já convertido\n7. O usuário deverá informar a descrição do item adquirido, valor e o nome do fornecedor.\nCaso as informações não estejam contidas na mensagem, você deve responder que não foi possível avaliar a solicitação.\n[Saída]\nApós salvar, responda de forma curta e clara:\n\"Despesa registrada: [Item] – R$[valor convertido] em [data].\"\nExemplo de resposta:\n\"Despesa registrada: Pizza – R$52,30 em 17/06/2025.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -400,
+        -256
+      ],
+      "id": "15710af8-9092-48bf-8de1-75e23041b73a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 2
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -416,
+        160
+      ],
+      "id": "86f340a0-66f8-41b3-95d4-8f11a745d29f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {
+          "allowedFilesMimeTypes": "={{ $vars.dataAtual }}",
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -960,
+        128
+      ],
+      "id": "7d5e0d9a-f3e4-4069-b833-0da555bcf7eb",
+      "name": "Entrada Informações",
+      "webhookId": "70433fae-0750-4ce7-8251-eaef00f084aa"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -656,
+        144
+      ],
+      "id": "06c5bd32-5894-4abc-b4bb-e789a91e9c9d",
+      "name": "Chat-Groq",
+      "credentials": {
+        "groqApi": {
+          "id": "yBmQqN9Um9cHsZGq",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.coinbase.com/v2/prices/BTC-BRL/spot",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        -192,
+        144
+      ],
+      "id": "c41b7908-2d3f-44ec-bf60-2b7d1a4241dd",
+      "name": "BitCoin_API"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Gl6pzC-wYItBlPXIsehON680DGlWGatiR8DXcMNOCbs",
+          "mode": "list",
+          "cachedResultName": "Controle-Finaceiro",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Gl6pzC-wYItBlPXIsehON680DGlWGatiR8DXcMNOCbs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 824276083,
+          "mode": "list",
+          "cachedResultName": "CustosMensais",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Gl6pzC-wYItBlPXIsehON680DGlWGatiR8DXcMNOCbs/edit#gid=824276083"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Categoria": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Categoria', `Pessoal / Empresarial`, 'string') }}",
+            "Valor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Valor', ``, 'string') }}",
+            "DataCompra": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DataCompra', ``, 'string') }}",
+            "DescricaoCompra": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DescricaoCompra', `O que foi adquirido`, 'string') }}",
+            "Pago": "NÃO",
+            "Fornecedor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Fornecedor', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DataCompra",
+              "displayName": "DataCompra",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Categoria",
+              "displayName": "Categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Fornecedor",
+              "displayName": "Fornecedor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DescricaoCompra",
+              "displayName": "DescricaoCompra",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Pago",
+              "displayName": "Pago",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        128
+      ],
+      "id": "14ca9c8a-3759-40e4-9ff2-8a69cff006dc",
+      "name": "Planilha Despesas",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VuoCDPZAp7aXvHsc",
+          "name": "Google Sheets account 5"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Entrada Informações": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat-Groq": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "BitCoin_API": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Planilha Despesas": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "eceeec7d-e499-4b2d-b3a7-5c883385edd8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "46c2d83be72f17f0f83c2fc275fcd4f6e458b7d38983ffce9dc478866899af25"
+  },
+  "id": "WKCre7TeEu7pFTkH",
+  "tags": []
+}

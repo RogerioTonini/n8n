@@ -1,0 +1,18 @@
+// Loop para preeencher lista no JAVA Script
+
+let results = [];
+
+for (item of items) {
+	for (key of Object.keys($(['Nome Node anterior']).item.binary) {
+		results.push({
+			json: {
+				filename: $(['Nome Node anterior']).item.binary[key].filename
+			},
+			binary: {
+				data: $(['Nome Node anterior']).item.binary[key],
+			}
+		]};
+	}
+}
+
+print results;
